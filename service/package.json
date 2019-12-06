@@ -16,5 +16,8 @@
     "koa-logger": "^3.2.1",
     "koa-router": "^7.4.0",
     "rz-mysql": "^1.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
   }
 }
