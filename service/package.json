@@ -8,5 +8,13 @@
   },
   "keywords": [],
   "author": "Roc-zhou <13031902163@163.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^16.1.8",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^7.4.0",
+    "rz-mysql": "^1.0.2"
+  }
 }
