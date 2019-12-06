@@ -10,7 +10,7 @@ module.exports = {
   // css的处理
   css: {
     // 当为true时，css文件名可省略 module 默认为 false
-    modules: true,
+    requireModuleExtension: true,
     // 是否将组件中的 CSS 提取至一个独立的 CSS 文件中,当作为一个库构建时，你也可以将其设置为 false 免得用户自己导入 CSS
     // 默认生产环境下是 true，开发环境下是 false
     extract: false,
@@ -25,7 +25,7 @@ module.exports = {
     port: 8085,
     https: false,
     hotOnly: false,
-    open: true, //配置自动启动浏览器
+    open: false, //配置自动启动浏览器
     proxy: {
       '/api': {
         target: '127.0.0.1:3005',
