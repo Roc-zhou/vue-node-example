@@ -1,5 +1,6 @@
 # client
 
+
 ## Project setup
 ```
 yarn install
@@ -24,6 +25,8 @@ yarn run test
 ```
 yarn run lint
 ```
+
+vue inspect > output.js
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

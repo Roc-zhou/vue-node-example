@@ -1,12 +1,17 @@
 module.exports = {
   outputDir: 'dist',
-  assetsDir: '',
+  assetsDir: 'public',
   indexPath: 'index.html',
   filenameHashing: true,
-  lintOnSave: process.env.NODE_ENV !== 'production',
+  lintOnSave: false,// process.env.NODE_ENV === 'production'
   productionSourceMap: false,
+  parallel: require('os').cpus().length > 1, // 构建时开启多进程处理babel编译
+  // 默认情况下 babel-loader 会忽略所有 node_modules 中的文件。如果你想要通过 Babel 显式转译一个依赖，可以在这个选项中列出来。
+  // transpileDependencies: ['node_modules/webpack-dev-server/client','node_modules/rz-methods'],
   // 对内部的 webpack 配置（比如修改、增加Loader选项）(链式操作)
-  chainWebpack: () => { },
+  chainWebpack: config => {
+    
+  },
   // css的处理
   css: {
     // 当为true时，css文件名可省略 module 默认为 false
@@ -25,7 +30,7 @@ module.exports = {
     port: 8085,
     https: false,
     hotOnly: false,
-    open: false, //配置自动启动浏览器
+    open: false,
     proxy: {
       '/api': {
         target: '127.0.0.1:3005',
