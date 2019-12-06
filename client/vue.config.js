@@ -10,7 +10,12 @@ module.exports = {
   // transpileDependencies: ['node_modules/webpack-dev-server/client','node_modules/rz-methods'],
   // 对内部的 webpack 配置（比如修改、增加Loader选项）(链式操作)
   chainWebpack: config => {
-    
+    // console.log(config.module.rule('js'));
+    /* config.module.rule('js')
+      .include
+      .add('./node_modules/rz-methods')
+      .end()
+      .use('babel-loader') */
   },
   // css的处理
   css: {
