@@ -3,7 +3,7 @@ import $util from 'rz-methods'
 import { $api, $http } from './axios'
 // import Vw from 'em-vw'
 
-console.log($util.formatDate);
+// console.log($util.formatDate);
 // Vw(10) // 初始化VM(CSS3)
 
 Vue.config.productionTip = false

@@ -37,6 +37,14 @@ app.use(async (ctx, next) => {
   await next();
 });
 
+/* function uncaughtExceptionHandler(err) {
+  if (err && err.code == 'ECONNREFUSED') {
+    //do someting
+  } else {
+    process.exit(1);
+  }
+}
+process.on('uncaughtException', uncaughtExceptionHandler); */
 
 // router
 app

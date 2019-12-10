@@ -34,20 +34,37 @@ module.exports = {
         body: '用户名或密码不正确!'
       })
     }
+
+    const TOKEN_EX = 60 * 60 * 60 * 2
+
     // 生成token
     const token = jwt.sign({
       data: selectUser[0]
     }, slot_code, {
-      expiresIn: 180
+      expiresIn: TOKEN_EX
     });
+    /* 
+      jwt.verify(token, 'shhhhh', function(err, decoded) {
+        console.log(decoded.foo) // bar
+      });
+    */
 
     // 存储redis
-    client.set(selectUser[0].phone, token, 'EX', 60 * 60, (err, res) => {
+    client.set(selectUser[0].phone, token, 'EX', TOKEN_EX, (err, res) => {
       if (err) {
         console.log(err);
         return ctx.throw()
       }
       console.log('token写入成功');
+    })
+
+    client.get(selectData[0].phone, (err, val) => {
+      if (err) {
+        console.log('获取token 失败！');
+        console.log(r);
+        return false;
+      }
+      console.log(val);
     })
 
     return ctx.throw({
