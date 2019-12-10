@@ -4,14 +4,15 @@ const { alg, key, iv } = require('../../config/index').desConfig
 const Des = require('rz-des')
 const $util = new Des({ alg, key, iv });
 const client = require('../../utils/redis')({ db: '1' })
+const privateKey = require('../../config/index').privateKey
 
 
 module.exports = {
   path: '/login',
   method: 'post',
   schema: {
-    phone: Joi.string().pattern(/^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/),
-    password: Joi.string().required()
+    phone: Joi.string().pattern(/^(0|86|17951)?(13[0-9]|15[012356789]|166|17[3678]|18[0-9]|14[57])[0-9]{8}$/).rule({ message: '手机号输入不正确！' }),
+    password: Joi.string().min(6).rule({ message: '密码输入不正确' })
   },
   function: async (ctx, next) => {
     const data = ctx.request.body
@@ -40,7 +41,7 @@ module.exports = {
     // 生成token
     const token = jwt.sign({
       data: selectUser[0]
-    }, slot_code, {
+    }, privateKey, {
       expiresIn: TOKEN_EX
     });
     /* 

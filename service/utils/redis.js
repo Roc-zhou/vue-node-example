@@ -4,7 +4,7 @@ const redisConfig = require('../config/index').redisConfig
 
 
 module.exports = redisClient = (config) => {
-  redisConfig.db = config.db || '1'
+  redisConfig.db = config.db || '0'
   let client = redis.createClient(redisConfig)
 
   client.on('ready', function (res) {
@@ -16,9 +16,7 @@ module.exports = redisClient = (config) => {
   });
 
   client.on('error', function (err) {
-    client.quit()
     console.log(err);
-    client = redis.createClient(redisConfig)
   });
 
   client.on('connect', function () {

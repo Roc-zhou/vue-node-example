@@ -11,7 +11,7 @@ module.exports = (schemaObj = {}) => {
     // console.log(result);
     if (result.error) {
       console.log(result.error);
-      return ctx.throw({ body: '参数错误', code: 501 })
+      return ctx.throw({ body: result.error.details[0].message, code: 501 })
     }
     return next()
   }
