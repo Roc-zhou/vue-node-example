@@ -10,5 +10,9 @@ module.exports = {
     alg: 'aes-128-cbc',
     key: 'asd123adaqwex123',
     iv: 'asd123adaqwex123'
+  },
+  redisConfig: {
+    host: '127.0.0.1',
+    port: 6379,
   }
 }

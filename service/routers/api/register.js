@@ -20,7 +20,7 @@ module.exports = {
     // 查重
     const selectData = await ctx.db('select phone,name from user where phone = ?', [data.phone])
     if (selectData.length !== 0) {
-      ctx.throw({
+      return ctx.throw({
         code: 10002,
         body: '用户已存在！'
       })
@@ -28,8 +28,9 @@ module.exports = {
 
     try {
       await ctx.db('insert into user (name,phone,slot_code,password,create_time) values (?,?,?,?,?)', [data.name, data.phone, slot_code, password, formatDate(new Date())])
+      console.log([data.name, data.phone, slot_code, password, formatDate(new Date())]);
 
-      return ctx.throw({ body: true })
+      return ctx.throw({ body: true, code: 200 })
     } catch (error) {
       console.log(error);
       return ctx.throw()
