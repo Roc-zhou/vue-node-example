@@ -36,7 +36,7 @@ module.exports = {
       })
     }
 
-    const TOKEN_EX = 60 * 60 * 60 * 2
+    const TOKEN_EX = 60 * 60 * 2
 
     // 生成token
     const token = jwt.sign({

@@ -12,8 +12,8 @@ module.exports = {
     iv: 'asd123adaqwex123'
   },
   redisConfig: {
-    host: '127.0.0.1',
-    port: 6379,
+    host: '192.168.99.100',
+    port: 32768,
   },
   privateKey:'asd12casd12dasdtfdsfhb2afsad234fsd'
 }
