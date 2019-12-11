@@ -5,6 +5,7 @@ const Des = require('rz-des')
 const $util = new Des({ alg, key, iv });
 const client = require('../../utils/redis')({ db: '1' })
 const privateKey = require('../../config/index').privateKey
+const { setToken } = require('../../utils/methods')
 
 
 module.exports = {
@@ -39,16 +40,13 @@ module.exports = {
     const TOKEN_EX = 60 * 60 * 2
 
     // 生成token
-    const token = jwt.sign({
-      data: selectUser[0]
-    }, privateKey, {
-      expiresIn: TOKEN_EX
-    });
-    /* 
-      jwt.verify(token, 'shhhhh', function(err, decoded) {
-        console.log(decoded.foo) // bar
-      });
-    */
+    const token = setToken(selectUser[0], TOKEN_EX)
+
+    /* jwt.verify(token, privateKey, function (err, decoded) {
+      console.log('----------------');
+      console.log(decoded)
+    }); */
+
 
     // 存储redis
     client.set(selectUser[0].phone, token, 'EX', TOKEN_EX, (err, res) => {

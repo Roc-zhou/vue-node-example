@@ -1,3 +1,6 @@
+const jwt = require('jsonwebtoken');
+const privateKey = require('../config/index').privateKey
+
 module.exports.formatDate = (date, format = 'yyyy-MM-dd hh:mm:ss') => {
   if (!date) return '';
   date = new Date(date);
@@ -21,4 +24,21 @@ module.exports.randomString = (len = 10) => {
   let pwd = ''
   for (let i = 0; i < len; i++) pwd += $chars.charAt(Math.floor(Math.random() * maxPos))
   return pwd
+}
+
+
+module.exports.setToken = (data, ex) => {
+  return jwt.sign({
+    data
+  }, privateKey, {
+    expiresIn: ex
+  })
+}
+module.exports.getTokenInfo = (data) => {
+  jwt.verify(data, privateKey, (err, decoded) => {
+    if (err) {
+      return null
+    }
+    return decoded.data
+  });
 }
