@@ -28,13 +28,18 @@ module.exports = {
 
     try {
       await ctx.db('insert into user (name,phone,slot_code,password,create_time) values (?,?,?,?,?)', [data.name, data.phone, slot_code, password, formatDate(new Date())])
-      console.log([data.name, data.phone, slot_code, password, formatDate(new Date())]);
-
-      return ctx.throw({ body: true, code: 200 })
     } catch (error) {
       console.log(error);
-      return ctx.throw()
+      return ctx.throw({
+        body: 0, // 0 失败
+        code: 10000
+      })
     }
+    
+    return ctx.throw({
+      body: 1, // 1 成功 
+      code: 10000
+    })
 
   },
 }

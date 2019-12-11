@@ -35,10 +35,9 @@ module.exports.setToken = (data, ex) => {
   })
 }
 module.exports.getTokenInfo = (data) => {
-  jwt.verify(data, privateKey, (err, decoded) => {
-    if (err) {
-      return null
-    }
-    return decoded.data
-  });
+  try {
+    return jwt.verify(data, privateKey).data
+  } catch (error) {
+    return null
+  }
 }

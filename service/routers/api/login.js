@@ -1,11 +1,9 @@
 const Joi = require('@hapi/joi')
-const jwt = require('jsonwebtoken');
 const { alg, key, iv } = require('../../config/index').desConfig
 const Des = require('rz-des')
 const $util = new Des({ alg, key, iv });
 const client = require('../../utils/redis')({ db: '1' })
-const privateKey = require('../../config/index').privateKey
-const { setToken } = require('../../utils/methods')
+const { setToken,getTokenInfo } = require('../../utils/methods')
 
 
 module.exports = {
@@ -37,19 +35,16 @@ module.exports = {
       })
     }
 
-    const TOKEN_EX = 60 * 60 * 2
+    const TOKEN_EX = 60 * 2
 
     // 生成token
     const token = setToken(selectUser[0], TOKEN_EX)
 
-    /* jwt.verify(token, privateKey, function (err, decoded) {
-      console.log('----------------');
-      console.log(decoded)
-    }); */
-
+    const s = getTokenInfo(token)
+    console.log('获取token', s);
 
     // 存储redis
-    client.set(selectUser[0].phone, token, 'EX', TOKEN_EX, (err, res) => {
+    client.set(selectUser[0].id, token, 'EX', TOKEN_EX, (err, res) => {
       if (err) {
         console.log(err);
         return ctx.throw()
@@ -57,10 +52,10 @@ module.exports = {
       console.log('token写入成功');
     })
 
-    client.get(selectData[0].phone, (err, val) => {
+    client.get(selectUser[0].id, (err, val) => {
       if (err) {
         console.log('获取token 失败！');
-        console.log(r);
+        console.log(err);
         return false;
       }
       console.log(val);
@@ -70,7 +65,5 @@ module.exports = {
       code: 200,
       body: token
     })
-
-
   },
 }
