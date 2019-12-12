@@ -6,8 +6,12 @@ const logger = require('koa-logger')
 const bodyparser = require('koa-bodyparser')
 const Moment = require("moment")
 const json = require('koa-json');
+const { getTokenInfo } = require('./utils/methods')
 // const errModule = require('./utils/errorModule')
 
+
+// 排除的路由
+const apiUrl = ['/api/user/register', '/api/user/login']
 
 // use json
 app.use(json())
@@ -32,10 +36,34 @@ app.use(async (ctx, next) => {
 })
 app.use(async (ctx, next) => {
   if (ctx.method === 'POST' && ctx.header['content-type'].indexOf('application/json') === -1) {
-    ctx.throw()
+    ctx.throw({
+      code: 400,
+      body: '错误的请求!'
+    })
   }
   await next();
-});
+}).use(async (ctx, next) => {
+  // 排除token校验
+  const token = ctx.header.token,
+    url = ctx.url
+  if (apiUrl.indexOf(url) === -1) {
+    if (token && !getTokenInfo(token)) {
+      return ctx.throw({
+        code: 301,
+        body: 'token过期，请重新登录！'
+      })
+    } else {
+      return ctx.throw({
+        code: 400,
+        body: 'token不存在，请求错误！'
+      })
+    }
+  }
+
+
+
+  await next()
+})
 
 // router
 app
